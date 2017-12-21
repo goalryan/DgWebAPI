@@ -1,0 +1,86 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <RootNamespace>DgWebAPI</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+    <Folder Include="ResponeHandle\" />
+    <Folder Include="Common\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="System.Security.Permissions" Version="4.4.0" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.0" />
+    <PackageReference Include="MySql.Data" Version="8.0.8-dmr" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Service\obj\Service.csproj.nuget.cache" />
+    <None Remove="Service\obj\Service.csproj.nuget.g.props" />
+    <None Remove="Service\obj\Service.csproj.nuget.g.targets" />
+    <None Remove="DBUtility\bin\Debug\netcoreapp2.0\DBUtility.dll" />
+    <None Remove="DBUtility\bin\Debug\netcoreapp2.0\DBUtility.pdb" />
+    <None Remove="DBUtility\obj\DBUtility.csproj.nuget.cache" />
+    <None Remove="DBUtility\obj\DBUtility.csproj.nuget.g.props" />
+    <None Remove="DBUtility\obj\DBUtility.csproj.nuget.g.targets" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.AssemblyInfoInputs.cache" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.csproj.CoreCompileInputs.cache" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.csproj.FileListAbsolute.txt" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.csprojResolveAssemblyReference.cache" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.dll" />
+    <None Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.pdb" />
+    <None Remove="DAL\bin\Debug\netcoreapp2.0\DAL.dll" />
+    <None Remove="DAL\bin\Debug\netcoreapp2.0\DAL.pdb" />
+    <None Remove="DAL\bin\Debug\netcoreapp2.0\DBUtility.dll" />
+    <None Remove="DAL\bin\Debug\netcoreapp2.0\DBUtility.pdb" />
+    <None Remove="DAL\obj\DAL.csproj.nuget.cache" />
+    <None Remove="DAL\obj\DAL.csproj.nuget.g.props" />
+    <None Remove="DAL\obj\DAL.csproj.nuget.g.targets" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.AssemblyInfoInputs.cache" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.csproj.CopyComplete" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.csproj.CoreCompileInputs.cache" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.csproj.FileListAbsolute.txt" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.csprojResolveAssemblyReference.cache" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.dll" />
+    <None Remove="DAL\obj\Debug\netcoreapp2.0\DAL.pdb" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="obj\project.assets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Service\CustomerAddressRepository.cs" />
+    <Compile Remove="Service\CustomerRepository.cs" />
+    <Compile Remove="Service\ICustomerAddressRepository.cs" />
+    <Compile Remove="Service\ICustomerRepository.cs" />
+    <Compile Remove="Models\Customer.cs" />
+    <Compile Remove="Models\CustomerAddress.cs" />
+    <Compile Remove="DBUtility\CommandInfo.cs" />
+    <Compile Remove="DBUtility\DESEncrypt.cs" />
+    <Compile Remove="DBUtility\DbHelper.cs" />
+    <Compile Remove="DBUtility\PubConstant.cs" />
+    <Compile Remove="DBUtility\obj\Debug\netcoreapp2.0\DBUtility.AssemblyInfo.cs" />
+    <Compile Remove="DAL\CustomerAddressDal.cs" />
+    <Compile Remove="DAL\CustomerDal.cs" />
+    <Compile Remove="DAL\obj\Debug\netcoreapp2.0\DAL.AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Service\obj\project.assets.json" />
+    <Content Remove="DBUtility\bin\Debug\netcoreapp2.0\DBUtility.deps.json" />
+    <Content Remove="DBUtility\obj\project.assets.json" />
+    <Content Remove="DAL\bin\Debug\netcoreapp2.0\DAL.deps.json" />
+    <Content Remove="DAL\obj\project.assets.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Service\Service.csproj" />
+    <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\AuthorizePolicy.JWT\AuthorizePolicy.JWT.csproj" />
+  </ItemGroup>
+</Project>
