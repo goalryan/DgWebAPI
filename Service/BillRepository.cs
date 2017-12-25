@@ -56,7 +56,16 @@ namespace DgWebAPI.Service
 
         public string UpdateBillCustomerGoods(Passport passport, Bill item)
         {
-            return dal.UpdateBillCustomerGoods(passport, item) > 0 ? "" : ErrorMsg.UpdateFailMsg();
+            ProfitDal profitDal = new ProfitDal();
+            int result = dal.UpdateBillCustomerGoods(passport, item);
+            if (result > 0)
+            {
+                return profitDal.UpdateBillAllProfit(item.Id) > 0 ? "" : "计算利润失败";
+            }
+            else
+            {
+                return "保存数据失败";
+            }
         }
 
         public string Remove(Passport passport, string key)
@@ -83,6 +92,10 @@ namespace DgWebAPI.Service
                     bill.TaxRate = Convert.ToDecimal(dr["tax_rate"]);
                     bill.Memo = dr["bill_memo"].ToString();
                     bill.IsClose = Convert.ToBoolean(dr["is_close"]);
+                    bill.Quantity = Convert.ToInt32(dr["bill_goods_quantity"]);
+                    bill.InTotalPrice = Convert.ToDecimal(dr["bill_goods_in_total_price"]);
+                    bill.OutTotalPrice = Convert.ToDecimal(dr["bill_goods_out_total_price"]);
+                    bill.Profit = Convert.ToDecimal(dr["bill_goods_profit"]);
                     bill.CustomerList = new List<BillCustomer>();
                 }
                 //没有关联数据，退出
@@ -94,7 +107,7 @@ namespace DgWebAPI.Service
                 {
                     if (customer != null)
                     {
-                        CalculateProfit(ref customer);
+                        //CalculateProfit(ref customer);
                         bill.CustomerList.Add(customer);
                     }
 
@@ -107,6 +120,10 @@ namespace DgWebAPI.Service
                     customer.AddressId = dr["address_id"].ToString();
                     customer.IsPaid = Convert.ToBoolean(dr["is_paid"]);
                     customer.Memo = dr["memo"].ToString();
+                    customer.Quantity = Convert.ToInt32(dr["customer_goods_quantity"]);
+                    customer.InTotalPrice = Convert.ToDecimal(dr["customer_goods_in_total_price"]);
+                    customer.OutTotalPrice = Convert.ToDecimal(dr["customer_goods_out_total_price"]);
+                    customer.Profit = Convert.ToDecimal(dr["customer_goods_profit"]);
                     customer.GoodsList = new List<BillGoods>();
                     if (dr["bill_goods_id"].GetType() == typeof(System.DBNull))
                     {
@@ -143,15 +160,19 @@ namespace DgWebAPI.Service
             obj.GoodsName = dr["goods_name"].ToString();
             obj.PositionId = dr["position_id"].ToString();
             obj.PositionName = dr["position_name"].ToString();
-            obj.Quantity = Convert.ToInt32(dr["quantity"]);
             obj.InUnitPrice = Convert.ToDecimal(dr["in_unit_price"]);
             obj.OutUnitPrice = Convert.ToDecimal(dr["out_unit_price"]);
             obj.IsRMB = Convert.ToBoolean(dr["is_rmb"]);
+
+            obj.Quantity = Convert.ToInt32(dr["goods_quantity"]);
+            obj.InTotalPrice = Convert.ToDecimal(dr["goods_in_total_price"]);
+            obj.OutTotalPrice = Convert.ToDecimal(dr["goods_out_total_price"]);
+            obj.Profit = Convert.ToDecimal(dr["goods_profit"]);
             //计算总买入价格、卖出价格、利润
-            decimal taxRate = Convert.ToDecimal(dr["tax_rate"]);
-            obj.InTotalPrice = Math.Round(obj.Quantity * obj.InUnitPrice * (obj.IsRMB ? 1 : taxRate));
-            obj.OutTotalPrice = Math.Round(obj.Quantity * obj.OutUnitPrice);
-            obj.Profit = obj.OutTotalPrice - obj.InTotalPrice;
+            //decimal taxRate = Convert.ToDecimal(dr["tax_rate"]);
+            //obj.InTotalPrice = Math.Round(obj.Quantity * obj.InUnitPrice * (obj.IsRMB ? 1 : taxRate));
+            //obj.OutTotalPrice = Math.Round(obj.Quantity * obj.OutUnitPrice);
+            //obj.Profit = obj.OutTotalPrice - obj.InTotalPrice;
             return obj;
         }
         /// <summary>

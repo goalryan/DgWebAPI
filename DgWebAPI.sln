@@ -16,6 +16,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7FAE5AB0-7B04-4A59-9022-F3954F583277}"
 	ProjectSection(SolutionItems) = preProject
 		sql = sql
+		GenerateSql-bak.cs = GenerateSql-bak.cs
 	EndProjectSection
 EndProject
 Global

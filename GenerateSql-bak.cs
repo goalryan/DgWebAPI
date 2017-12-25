@@ -74,6 +74,14 @@ namespace DgWebAPI.DAL
             return sql;
         }
 
+        public static string ReturnUpdateBillProfitSql(Bill item)
+        {
+            string sql = string.Format(@"UPDATE  bill SET `quantity`={0}, `in_total_price`={1}, `out_total_price`={2}, `profit`={3}  WHERE id = '{4}';",
+                                       item.Quantity, item.InTotalPrice, item.OutTotalPrice, item.Profit, item.Id);
+            return sql;
+        }
+
+
         public static string ReturnAddCustomerSql(string id, string nickName, string enterpriseId)
         {
             string sql = string.Format(@"INSERT INTO cus_customer (id, nick_name, enterprise_id) 
@@ -89,33 +97,42 @@ namespace DgWebAPI.DAL
 
         public static string ReturnInsertBillCustomerSql(BillCustomer item)
         {
-            string sql = string.Format(@"INSERT INTO `bill_customer` (`id`, `bill_id`, `customer_id`, `is_paid`, `memo`, `customer_nick_name`) VALUES ('{0}', '{1}', '{2}', {3}, '{4}', '{5}');",
-                                       item.Id, item.BillId, item.CustomerId, item.IsPaid, item.Memo, item.CustomerNickName);
+            string sql = string.Format(@"INSERT INTO `bill_customer` (`id`, `bill_id`, `customer_id`, `is_paid`, `memo`, `customer_nick_name`,
+                                                            `quantity`, `in_total_price`, `out_total_price`, `profit` )
+                                                 VALUES ('{0}', '{1}', '{2}', {3}, '{4}', '{5}', {6}, {7}, {8}, {9});",
+                                       item.Id, item.BillId, item.CustomerId, item.IsPaid, item.Memo, item.CustomerNickName,
+                                       item.Quantity, item.InTotalPrice, item.OutTotalPrice, item.Profit);
             return sql;
         }
 
         public static string ReturnUpdateBillCustomerSql(BillCustomer item)
         {
-            string sql = string.Format(@"UPDATE  bill_customer SET customer_id = '{0}',is_paid = {1}, memo='{2}', customer_nick_name='{3}' WHERE id = '{4}';",
-                                       item.CustomerId, item.IsPaid, item.Memo, item.CustomerNickName, item.Id);
+            string sql = string.Format(@"UPDATE  bill_customer SET customer_id = '{0}',is_paid = {1}, memo='{2}', customer_nick_name='{3}', 
+                                        `quantity`={4},`in_total_price`={5},  `out_total_price`={6}, `profit`={7} WHERE id = '{8}';",
+                                       item.CustomerId, item.IsPaid, item.Memo, item.CustomerNickName,
+                                       item.Quantity, item.InTotalPrice, item.OutTotalPrice, item.Profit, item.Id);
             return sql;
         }
 
         public static string ReturnInsertBillGoodsSql(BillGoods goods)
         {
             string sql = string.Format(@"INSERT INTO `bill_goods` (`id`, `bill_id`, `bill_customer_id`, `goods_id`, `quantity`, 
-                                        `in_unit_price`, `is_rmb`, `out_unit_price`,  `position_id`, `goods_name`) 
-                                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}', '{9}');",
+                                        `in_unit_price`, `is_rmb`, `out_unit_price`,  `position_id`, `goods_name`,
+                                        `in_total_price`, `out_total_price`, `profit`) 
+                                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');",
                                        goods.Id, goods.BillId, goods.BillCustomerId, goods.GoodsId, goods.Quantity,
-                                       goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice, goods.PositionId, goods.GoodsName);
+                                       goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice, goods.PositionId, goods.GoodsName,
+                                       goods.InTotalPrice, goods.OutTotalPrice, goods.Profit);
             return sql;
         }
 
         public static string ReturnUpdateBillGoodsSql(BillGoods goods)
         {
             string sql = string.Format(@"UPDATE `bill_goods` SET `bill_customer_id`='{0}', `goods_id`='{1}', `quantity`='{2}', `in_unit_price`='{3}', 
-                                 `is_rmb`={4}, `out_unit_price`='{5}',  `position_id`='{6}', `goods_name`='{7}' WHERE id = '{8}';",
-                                       goods.BillCustomerId, goods.GoodsId, goods.Quantity, goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice, goods.PositionId, goods.GoodsName, goods.Id);
+                                 `is_rmb`={4}, `out_unit_price`='{5}',  `position_id`='{6}', `goods_name`='{7}',  
+                                 `in_total_price`='{8}',  `out_total_price`='{9}', `profit`='{10}' WHERE id = '{11}';",
+                                       goods.BillCustomerId, goods.GoodsId, goods.Quantity, goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice,
+                                       goods.PositionId, goods.GoodsName, goods.InTotalPrice, goods.OutTotalPrice, goods.Profit, goods.Id);
             return sql;
         }
     }

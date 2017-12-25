@@ -54,6 +54,19 @@ namespace DgWebAPI.DAL
             return GetBillGoodsProfit(billGoodsId);
         }
 
+        /// <summary>
+        /// 更新账单及客户利润
+        /// </summary>
+        /// <returns>The bill profit.</returns>
+        /// <param name="id">Identifier.</param>
+        public int UpdateBillAllProfit(string id)
+        {
+            UpdateBillGoodsProfit(id);
+            UpdateBillCustomerProfit(true, id);
+            UpdateBillProfit(id);
+            return 1;
+        }
+
 
         #region 查询利润
         /// <summary>
@@ -264,7 +277,7 @@ namespace DgWebAPI.DAL
                                             SUM(profit) profit
                                     FROM
                                         bill_goods
-                                    WHERE bil_id = '{0}' group by bill_customer_id ) b ON a.id = b.bill_customer_id 
+                                    WHERE bill_id = '{0}' group by bill_customer_id ) b ON a.id = b.bill_customer_id 
                                 SET 
                                     a.quantity = CASE
                                         WHEN b.quantity IS NULL THEN 0
@@ -282,7 +295,7 @@ namespace DgWebAPI.DAL
                                         WHEN b.profit IS NULL THEN 0
                                         ELSE b.profit
                                     END
-                                WHERE bil_id = '{0}' ", id);
+                                WHERE bill_id = '{0}' ", id);
             return sql;
         }
         /// <summary>
