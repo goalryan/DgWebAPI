@@ -104,10 +104,11 @@ namespace DgWebAPI.DAL
         public static string ReturnInsertBillGoodsSql(BillGoods goods)
         {
             string sql = string.Format(@"INSERT INTO `bill_goods` (`id`, `bill_id`, `bill_customer_id`, `goods_id`, `quantity`, 
-                                        `in_unit_price`, `is_rmb`, `out_unit_price`,  `position_id`, `goods_name`) 
-                                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}', '{9}');",
+                                        `in_unit_price`, `is_rmb`, `out_unit_price`,  `position_id`, `goods_name`, `in_total_price`, `out_total_price`, `profit`) 
+                                 VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', {6}, '{7}', '{8}', '{9}', '{10}', '{11}', '{12}');",
                                        goods.Id, goods.BillId, goods.BillCustomerId, goods.GoodsId, goods.Quantity,
-                                       goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice, goods.PositionId, goods.GoodsName);
+                                       goods.InUnitPrice, goods.IsRMB, goods.OutUnitPrice, goods.PositionId, goods.GoodsName,
+                                       goods.InTotalPrice, goods.OutTotalPrice, goods.Profit);
             return sql;
         }
 
